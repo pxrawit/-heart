@@ -13,14 +13,9 @@ import os
 import plotly.graph_objects as go
 
 # ==================== Configuration ====================
-# 🔧 แก้ไขข้อมูลผู้พัฒนาตรงนี้
-DEVELOPER_INFO = {
-    "name": "Your Name",
-    "email": "your.email@example.com",
-    "github": "https://github.com/your-username",
-    "linkedin": "https://linkedin.com/in/your-profile",
-    "institution": "Your University / Company"
-}
+# 🔧 แก้ไขข้อมูลตรงนี้ (ใส่แค่ชื่อกับอีเมล)
+DEVELOPER_NAME = "pxrawit"
+DEVELOPER_EMAIL = "puwaritchammunkung@gmail.com"
 
 # ==================== Page Configuration ====================
 st.set_page_config(
@@ -33,12 +28,10 @@ st.set_page_config(
 # ==================== Custom CSS ====================
 st.markdown("""
 <style>
-    /* Main theme */
     .stApp {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     }
     
-    /* Title styling */
     .main-title {
         font-size: 2.5rem;
         font-weight: 700;
@@ -55,16 +48,6 @@ st.markdown("""
         margin-bottom: 2rem;
     }
     
-    /* Card styling */
-    .card {
-        background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin-bottom: 1rem;
-    }
-    
-    /* Result boxes */
     .result-safe {
         background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         color: white;
@@ -87,7 +70,6 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(235, 51, 73, 0.3);
     }
     
-    /* Sidebar */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
     }
@@ -96,7 +78,6 @@ st.markdown("""
         color: white !important;
     }
     
-    /* Button */
     .stButton > button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -113,33 +94,27 @@ st.markdown("""
         box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     }
     
-    /* Contact Card */
-    .contact-card {
+    /* Email Card */
+    .email-card {
         background: rgba(255, 255, 255, 0.1);
-        padding: 1rem;
+        padding: 1.2rem;
         border-radius: 10px;
-        margin: 0.5rem 0;
+        text-align: center;
         backdrop-filter: blur(10px);
     }
     
-    .contact-item {
-        display: flex;
-        align-items: center;
-        padding: 0.5rem 0;
-        color: white !important;
-    }
-    
-    .contact-item a {
+    .email-link {
         color: #ecf0f1 !important;
         text-decoration: none;
-        transition: color 0.3s;
+        font-size: 1rem;
+        font-weight: 500;
+        word-break: break-all;
     }
     
-    .contact-item a:hover {
+    .email-link:hover {
         color: #3498db !important;
     }
     
-    /* Developer Profile */
     .dev-profile {
         text-align: center;
         padding: 1rem;
@@ -154,18 +129,12 @@ st.markdown("""
         color: #ecf0f1 !important;
         margin: 0.5rem 0;
     }
-    
-    .dev-role {
-        font-size: 0.9rem;
-        color: #bdc3c7 !important;
-    }
 </style>
 """, unsafe_allow_html=True)
 
 # ==================== Load Model ====================
 @st.cache_resource
 def load_model():
-    """โหลดโมเดลที่บันทึกไว้"""
     model_path = "heart_disease_model.pkl"
     if not os.path.exists(model_path):
         st.error("❌ ไม่พบไฟล์โมเดล! กรุณาวางไฟล์ heart_disease_model.pkl ในโฟลเดอร์เดียวกัน")
@@ -189,8 +158,7 @@ with st.sidebar:
         f"""
         <div class="dev-profile">
             <div style="font-size: 3rem;">👨‍💻</div>
-            <div class="dev-name">{DEVELOPER_INFO['name']}</div>
-            <div class="dev-role">{DEVELOPER_INFO['institution']}</div>
+            <div class="dev-name">{DEVELOPER_NAME}</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -211,39 +179,16 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # 📧 Contact Information Section
-    st.markdown("### 📞 ติดต่อผู้พัฒนา")
+    # 📧 Email Section (แบบเรียบง่าย)
+    st.markdown("### 📧 ติดต่อผู้พัฒนา")
     
     st.markdown(
         f"""
-        <div class="contact-card">
-            <div class="contact-item">
-                📧 <strong style="margin-left: 8px;">Email:</strong>
-            </div>
-            <div class="contact-item">
-                <a href="mailto:{DEVELOPER_INFO['email']}?subject=Heart Disease App Inquiry" 
-                   style="margin-left: 28px;">
-                    {DEVELOPER_INFO['email']}
-                </a>
-            </div>
-            <div class="contact-item">
-                🐙 <strong style="margin-left: 8px;">GitHub:</strong>
-            </div>
-            <div class="contact-item">
-                <a href="{DEVELOPER_INFO['github']}" target="_blank"
-                   style="margin-left: 28px;">
-                    View Repository
-                </a>
-            </div>
-            <div class="contact-item">
-                💼 <strong style="margin-left: 8px;">LinkedIn:</strong>
-            </div>
-            <div class="contact-item">
-                <a href="{DEVELOPER_INFO['linkedin']}" target="_blank"
-                   style="margin-left: 28px;">
-                    Connect with me
-                </a>
-            </div>
+        <div class="email-card">
+            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">✉️</div>
+            <a href="mailto:{DEVELOPER_EMAIL}" class="email-link">
+                {DEVELOPER_EMAIL}
+            </a>
         </div>
         """,
         unsafe_allow_html=True
@@ -252,7 +197,7 @@ with st.sidebar:
     # Quick Email Button
     st.markdown(
         f"""
-        <a href="mailto:{DEVELOPER_INFO['email']}?subject=Heart Disease App Feedback&body=Hello {DEVELOPER_INFO['name']},%0D%0A%0D%0AI would like to provide feedback about your Heart Disease Prediction App.%0D%0A%0D%0A" 
+        <a href="mailto:{DEVELOPER_EMAIL}?subject=Heart Disease App Feedback" 
            target="_blank" 
            style="text-decoration: none;">
             <div style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); 
@@ -262,7 +207,7 @@ with st.sidebar:
                         text-align: center; 
                         font-weight: 600;
                         margin-top: 0.5rem;">
-                ✉️ ส่งอีเมลหาผู้พัฒนา
+                ✉️ ส่งอีเมล
             </div>
         </a>
         """,
@@ -281,8 +226,8 @@ with st.sidebar:
     st.markdown(
         f"""
         <div style='text-align: center; color: #bdc3c7; font-size: 0.85rem;'>
-            Made with ❤️ by <strong>{DEVELOPER_INFO['name']}</strong><br>
-            © 2026 {DEVELOPER_INFO['institution']}
+            Made with ❤️ by <strong>{DEVELOPER_NAME}</strong><br>
+            © 2026
         </div>
         """,
         unsafe_allow_html=True
@@ -441,7 +386,6 @@ if predict_clicked:
     fig.update_layout(height=300)
     st.plotly_chart(fig, use_container_width=True)
     
-    # Expander สำหรับดูข้อมูล
     with st.expander("📋 ดูข้อมูลที่คุณกรอก", expanded=False):
         st.dataframe(input_data, use_container_width=True)
     
@@ -478,20 +422,12 @@ st.markdown(
         </p>
         <p style='font-size: 0.85rem; margin-top: 1rem;'>
             📧 ติดต่อผู้พัฒนา: 
-            <a href="mailto:{DEVELOPER_INFO['email']}" style="color: #3498db;">
-                {DEVELOPER_INFO['email']}
-            </a>
-            &nbsp;|&nbsp;
-            🐙 <a href="{DEVELOPER_INFO['github']}" target="_blank" style="color: #3498db;">
-                GitHub
-            </a>
-            &nbsp;|&nbsp;
-            💼 <a href="{DEVELOPER_INFO['linkedin']}" target="_blank" style="color: #3498db;">
-                LinkedIn
+            <a href="mailto:{DEVELOPER_EMAIL}" style="color: #3498db;">
+                {DEVELOPER_EMAIL}
             </a>
         </p>
         <p style='font-size: 0.8rem; margin-top: 0.5rem;'>
-            © 2026 {DEVELOPER_INFO['name']} - {DEVELOPER_INFO['institution']}
+            © 2026 {DEVELOPER_NAME}
         </p>
     </div>
     """,
